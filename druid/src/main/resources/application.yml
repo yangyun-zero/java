@@ -1,0 +1,39 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /druid
+spring:
+  datasource:
+    name: cloudDB01
+    url: jdbc:mysql://47.107.172.70:3306/cloudDB01
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    platform: mysql
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat
+    maxActive: 100
+    initialSize: 1
+    maxWait: 60000
+    spring.datasorce.minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 100
+    druid:
+      filter:
+        wall:
+          enabled: true
+          config:
+            update-where-none-check: true
+            delete-where-none-check: true
+          log-violation: true
+          throw-exception: true
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+
+## 是否开启
+mybatis-plus.blockattacksqlparser.enabled: true
