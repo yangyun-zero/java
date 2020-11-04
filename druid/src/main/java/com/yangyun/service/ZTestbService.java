@@ -10,4 +10,6 @@ import com.yangyun.entities.ZTestb;
  */
 public interface ZTestbService extends IService<ZTestb> {
     void testDelete();
+
+    void testDelete2();
 }

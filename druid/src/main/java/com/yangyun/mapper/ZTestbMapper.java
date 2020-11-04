@@ -11,4 +11,6 @@ import com.yangyun.entities.ZTestb;
 public interface ZTestbMapper extends BaseMapper<ZTestb> {
 
     void testDelete();
+    
+    void testDelete2();
 }

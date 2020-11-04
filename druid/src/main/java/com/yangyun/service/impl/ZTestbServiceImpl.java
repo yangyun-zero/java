@@ -23,4 +23,9 @@ public class ZTestbServiceImpl extends ServiceImpl<ZTestbMapper, ZTestb> impleme
         LambdaQueryWrapper<ZTestb> lw = new LambdaQueryWrapper();
         zTestbMapper.testDelete();
     }
+
+    public void testDelete2 (){
+        LambdaQueryWrapper<ZTestb> lw = new LambdaQueryWrapper();
+        zTestbMapper.testDelete2();
+    }
 }

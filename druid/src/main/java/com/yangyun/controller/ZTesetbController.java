@@ -22,4 +22,9 @@ public class ZTesetbController {
     public void testDelete (){
         zTestbService.testDelete();
     }
+
+    @PostMapping("/testDelete2")
+    public void testDelete2 (){
+        zTestbService.testDelete2();
+    }
 }

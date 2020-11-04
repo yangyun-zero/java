@@ -25,7 +25,8 @@ public class MybatisPlusConfig {
     public PaginationInterceptor paginationInterceptor (){
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
         if (isBlockAttackSqlParser){
-            paginationInterceptor.setSqlParserList(Collections.singletonList(new BlockAttackSqlParser()));
+//            paginationInterceptor.setSqlParserList(Collections.singletonList(new BlockAttackSqlParser()));
+            paginationInterceptor.setSqlParserList(Collections.singletonList(new SelfDefBlockAttackSqlParser()));
         }
         return paginationInterceptor;
     }
