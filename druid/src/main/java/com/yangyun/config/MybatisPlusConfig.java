@@ -18,7 +18,7 @@ import java.util.Collections;
 @Configuration
 public class MybatisPlusConfig {
 
-    @Value("${mybatis-plus.blockattacksqlparser.enabled}")
+    @Value("${mybatis-plus.blockattacksqlparser.enabled:false}")
     private Boolean isBlockAttackSqlParser;
 
     @Bean
