@@ -20,6 +20,7 @@ tmp/**/*
 local.properties
 .classpath
 .settings/
+application-dev.yml
 .loadpath
 .factorypath
 /src/main/resources/rebel.xml
