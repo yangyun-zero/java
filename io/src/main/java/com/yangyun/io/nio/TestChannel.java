@@ -4,10 +4,17 @@ import org.junit.Test;
 
 import java.io.*;
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Map;
+import java.util.SortedMap;
 
 /**
  * @Description: 通道：用于建立源节点与目标节点的连接，并对缓冲区数据进行传输，本身并不能传输数据，需要结合缓冲区一起使用\
@@ -21,6 +28,44 @@ import java.nio.file.StandardOpenOption;
  * @Version 1.0
  **/
 public class TestChannel {
+
+    /**
+     * 功能描述: 字符集：
+     * 编码：String -> byte
+     * 解码：byte -> String
+     * @param ：
+     * Return:
+     * Author: yun.Yang
+     * Date: 2021/10/5 22:02
+     */
+    @Test
+    public void testCharset() throws CharacterCodingException {
+        // 查看支持的字符集
+        SortedMap<String, Charset> stringCharsetSortedMap = Charset.availableCharsets();
+        for (Map.Entry<String, Charset> stringCharsetEntry : stringCharsetSortedMap.entrySet()) {
+//            System.out.println(stringCharsetEntry.getKey() + "==" + stringCharsetEntry.getValue());
+        }
+
+        Charset charset = Charset.forName("gbk");
+        // 编码器
+        CharsetEncoder ce = charset.newEncoder();
+        // 解码器
+        CharsetDecoder cd = charset.newDecoder();
+
+        // 编码
+        CharBuffer cBuf = CharBuffer.allocate(1024);
+        cBuf.put("你好");
+        cBuf.flip();
+        ByteBuffer bBuf = ce.encode(cBuf);
+        for (int i = 0; i<4; i++){
+            System.out.println(bBuf.get());
+        }
+
+        // 解码
+        bBuf.flip();
+        CharBuffer decode = cd.decode(bBuf);
+        System.out.println(decode.toString());
+    }
 
     /**
      * 功能描述: 分散读取、聚集写入
