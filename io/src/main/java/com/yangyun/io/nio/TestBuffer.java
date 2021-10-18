@@ -151,6 +151,9 @@ public class TestBuffer {
     public void testAllocateAndDirect() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
         // 1. 创建一个直接缓冲区
         ByteBuffer buffer = ByteBuffer.allocateDirect(0);
+
+        buffer.asReadOnlyBuffer();
+
         // 查看 -XX:MaxDirectMemorySize 大小
         Class<?> c = Class.forName("java.nio.Bits");
         Field maxMemory = c.getDeclaredField("maxMemory");

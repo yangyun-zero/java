@@ -101,6 +101,10 @@ mark() 标记当前 position 的值并记录
 
 reset() 和 mark() 方法一起使用，可以从mark的位置再次读取数据
 
+slice() 在原始缓冲区的基础上分配一个新的缓冲区，一原缓冲区的capacity和limit。修改子缓冲区的数据原缓冲区的数据会跟着改变
+
+asReadOnlyBuffer() 分配一个只读缓冲区，改变原始缓冲区的值，只读缓冲区的值会跟着改变
+
 #### 缓冲区
 
 ##### 非直接缓冲区
@@ -141,4 +145,6 @@ allocateDirect() 方法（<font color='red'>直接缓冲区，将缓冲区建立
 3. 在 jdk1.7 的 NIO.2 的 Files 工具类的 newByteChannel()
 
 通过通道进行文件的读写，底层使用的就是缓冲股传输数据
+
+
 
