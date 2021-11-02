@@ -1,6 +1,20 @@
 # NIO
 
-nio new io(非阻塞io)
+nio new io(非阻塞io)，可以替代标准的 Java IO API。NIO 支持面向缓冲区、基于通道的IO操作。NIO 讲以更加高效的方式进行文件的读写操作。
+
+### 阻塞IO
+
+通常在进行IO操作时，在进行读写数据的时候，将会阻塞直至数据能读、写入。传统的Server/Client模式会基于TPR（Thread pre Request），服务器会为每一个客户端创建一个线程单独处理用户请求。这种模式会导致线程数急剧上升，增加服务器的开销。虽然可以采用线程池模型，但是线程池的线程数是有上线的，当线程数达到最大线程数，后面进来的请求还是阻塞。
+
+### 非阻塞IO(NIO)
+
+NIO采用了基于Reactor模式的工作方式，在进行数据读写时不会阻塞，相反会注册感兴趣的特定IO事件。在NIO中实现非阻塞的核心对象就是Selector。
+
+selector就是注册各种IO事件的地方
+
+![](src/main/resource/images/selector.jpg)
+
+![](src/main/resource/images/nio-io.jpg)
 
 ## Buffer（缓冲区）
 
