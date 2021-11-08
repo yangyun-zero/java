@@ -1,19 +1,11 @@
 package com.yangyun.io.nio;
 
-import lombok.experimental.Accessors;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-import sun.java2d.pipe.AAShapePipe;
-import sun.util.resources.ga.LocaleNames_ga;
 
-import java.math.BigDecimal;
 import java.net.InetSocketAddress;
-import java.net.SocketOption;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.util.Iterator;
-import java.util.Scanner;
-import java.util.Set;
 
 /**
  * @Description: 选择器使用
