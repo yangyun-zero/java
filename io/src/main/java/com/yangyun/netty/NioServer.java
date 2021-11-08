@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * @Description: SocketServer
+ * @Description: SocketServer 网络
  * 基于事件驱动，Selector 通过不同事件监听客户端，对相应时间做不同的业务处理
  * @Author yun.Yang
  * @Date 2021/11/8 23:38
