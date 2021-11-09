@@ -3,6 +3,7 @@ package com.yangyun.netty;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
+import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public class NioServer {
         // 创建选择器
         Selector selector = Selector.open();
 
-        // 将 channel 注册到 selector, 并监听 accept 事件
+        // 将 channel 注册到 selector, 并监听 accept 事件，添加到SelectorImpl.keys 中
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
         // 循环监听客户端的连接
@@ -37,12 +38,14 @@ public class NioServer {
 
             // 说明此时没有客户端连接
             if (selectCount == 0) {
-                System.out.println("now has no any client");
+//                System.out.println("now has no any client");
                 continue;
             }
 
             // 有客户端连接
             // 获取所有SelectionKey 集合，可以通过 SelectionKey 反向获取 channel
+            // selectionKeys 为所有发生了事件的客户端集合
+            // selector.keys() 记录的是所有连接到服务端的客户端
             Set<SelectionKey> selectionKeys = selector.selectedKeys();
             
             // 循环获取此时连接到Server 的Client
@@ -56,8 +59,10 @@ public class NioServer {
                     // 由于是第一次连接到 Server，通过SocketChannel 获取相应的连接
                     SocketChannel acceptChannel = serverSocketChannel.accept();
 
+                    acceptChannel.configureBlocking(false);
+
                     // 将连接到 Server 的客户端 Channel 注册到 Selector，并监听它的可读事件，同时绑定一个缓冲区
-                    acceptChannel.register(selector, SelectionKey.OP_READ, ByteBuffer.allocate(1024));
+                    acceptChannel.register(selector, SelectionKey.OP_READ, ByteBuffer.allocate(2));
                 }
 
                 // 当连接到 Server 的客户端连接发生了 OP_READ 事件，做对应的处理
@@ -68,7 +73,10 @@ public class NioServer {
                     ByteBuffer buffer = (ByteBuffer)key.attachment();
                     // 将 socketChannel 中的数据读入到 Buffer 中
                     socketChannel.read(buffer);
-                    System.out.println("come from client message " + new String(buffer.array()));
+
+                    buffer.flip();
+
+                    System.out.println("come from client message：" + new String(buffer.array(), 0, buffer.limit()));
                 }
 
                 // 防止重复操作，需要手动删除每次处理完后的 selectionKey、
