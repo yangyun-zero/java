@@ -8,6 +8,9 @@ import java.util.Set;
 
 /**
  * @Description: 简易版在线群聊
+ * 单线程模式：单 Reactor 单线程
+ * 一个线程处理所有请求（客户端建立连接、数据的读、写、业务处理等）
+ * 在客户端连接数量较多时，将无法支撑会出现性能瓶颈
  * @Author yun.Yang
  * @Date 2021/11/10 1:13
  * @Version 1.0
