@@ -1,4 +1,4 @@
-package com.yangyun.netty.groupchat;
+package com.yangyun.io.groupchat;
 
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;

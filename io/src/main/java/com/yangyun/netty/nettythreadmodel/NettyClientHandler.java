@@ -25,6 +25,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
         System.out.println("客户端已经连接");
         // 需要对发送的消息进行编码后才能正常发送
 //        ctx.writeAndFlush("2323");
+        System.out.println("客户端 channel hashCode：" + ctx.pipeline().channel().hashCode());
         ctx.writeAndFlush(Unpooled.copiedBuffer("hello, server: (>^ω^<)喵", CharsetUtil.UTF_8));
     }
 

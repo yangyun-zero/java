@@ -2,7 +2,9 @@ package com.yangyun.netty.nettythreadmodel;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -20,6 +22,7 @@ public class NettyClient {
     public static void main(String[] args) throws Exception {
         // 创建时间组
         NioEventLoopGroup clientGroup = new NioEventLoopGroup(1);
+//        EpollEventLoopGroup // 针对服务器部署在linux服务器
 
         // 创建客户端启动类
         Bootstrap bootstrap = new Bootstrap();
@@ -36,6 +39,12 @@ public class NettyClient {
 
         // 绑定服务端地址并连接
         ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 6668).sync();
+        channelFuture.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) throws Exception {
+
+            }
+        });
 
         channelFuture.channel().closeFuture().sync();
     }

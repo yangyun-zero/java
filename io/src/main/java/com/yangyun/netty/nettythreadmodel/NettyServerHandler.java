@@ -1,7 +1,9 @@
 package com.yangyun.netty.nettythreadmodel;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.*;
+
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description: 自定义handler处理器，需要集成netty提供的 HandlerAdapter
@@ -26,6 +28,25 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
         // 需要对 msg 进行 bytebuf 转换后才能正常显示
         System.out.println("收到来至客户端的消息：" + msg);
         System.out.println("ChannelHandlerContext ctx 包含的信息" + ctx);
+
+        // 当处理耗时比较长的业务时，可以添加 taskQueue 中异步处理
+        Channel channel = ctx.pipeline().channel();
+        ChannelConfig channelConfig = channel.config();
+        Map<ChannelOption<?>, Object> options = channelConfig.getOptions();
+        channel.eventLoop().execute(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+
+        channel.eventLoop().schedule(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }, 5, TimeUnit.SECONDS); // 等待五秒后执行
+
     }
 
     /**
@@ -37,7 +58,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        // 想客户端发送消息
+        // 向客户端发送消息
 //        ctx.writeAndFlush()
     }
 
