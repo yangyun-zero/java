@@ -5,6 +5,9 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.timeout.IdleStateHandler;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description:
@@ -23,5 +26,11 @@ public class ServerInitializerHandler extends ChannelInitializer<SocketChannel> 
 
         // 添加自定义业务逻辑处理器
         pipeline.addLast(new ServerBusinessHandler());
+
+        // 添加心跳检测handler
+        // 多少秒未读、未写，未读写
+        pipeline.addLast(new IdleStateHandler(2,3,4, TimeUnit.SECONDS));
+
+        pipeline.addLast(new ServerIdleStateHandler());
     }
 }

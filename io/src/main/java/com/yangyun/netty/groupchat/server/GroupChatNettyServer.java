@@ -11,7 +11,7 @@ import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.internal.PlatformDependent;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 
 /**
@@ -56,7 +56,7 @@ public class GroupChatNettyServer {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             // 设置启动参数
             serverBootstrap.group(bossGroup, workerGroup)
-                            .channel(org.apache.commons.lang3.StringUtils.startsWithIgnoreCase(PlatFormDependentType.WIN_OS.getOsType(), osName) ? NioServerSocketChannel.class : EpollServerSocketChannel.class)
+                            .channel(StringUtils.startsWithIgnoreCase(PlatFormDependentType.WIN_OS.getOsType(), osName) ? NioServerSocketChannel.class : EpollServerSocketChannel.class)
                             .option(ChannelOption.SO_BACKLOG, 100)
                             .childOption(ChannelOption.SO_KEEPALIVE, true)
                             .childHandler(new ServerInitializerHandler());

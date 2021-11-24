@@ -64,6 +64,10 @@ public class ServerBusinessHandler extends SimpleChannelInboundHandler<String> {
      */
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+
+
+
+
         System.out.println("======handlerAdded...=====");
         Channel newChannel = ctx.channel();
 
@@ -115,6 +119,7 @@ public class ServerBusinessHandler extends SimpleChannelInboundHandler<String> {
         System.out.println("======channelRead0...=====");
         Channel channel = ctx.channel();
 
+        // 服务端 -》 客户端 入栈
         if (channelGroup.size() > ConstantPools.ZERO_INT){
             channelGroup.forEach(ch -> {
                 // 其他客户端
