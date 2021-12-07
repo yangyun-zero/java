@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.util.Iterator;
+import java.util.Scanner;
 
 /**
  * @Description: 选择器使用
@@ -40,9 +41,7 @@ public class TestSelector {
         // 6 将通道注册到选择器，并设置选择器监听的模式
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
-
         //7 轮询监听选择器
-
         while(selector.select() > 0) {
             Iterator<SelectionKey> selectionKeyIterator = selector.selectedKeys().iterator();
             // 如果存在连接进来
@@ -51,6 +50,7 @@ public class TestSelector {
 
 
                 SocketChannel accept = serverSocketChannel.accept();
+                System.out.println("我是不是被阻塞了呢");
                 // 监听不同模式
                 if (selectionKey.isAcceptable()){
                     System.out.println("进来的连接已经就绪");
@@ -76,8 +76,8 @@ public class TestSelector {
                         // 5. 获取数据
                         System.out.println(new String(byteBuffer.array(), 0, byteBuffer.limit()));
                         byteBuffer.clear();
-                        System.out.println("validOps：" + channel.validOps());
-                        System.out.println(channel.finishConnect());
+//                        System.out.println("validOps：" + channel.validOps());
+//                        System.out.println(channel.finishConnect());
                     }
 
                 }
@@ -93,6 +93,7 @@ public class TestSelector {
      */
     @Test
     public void testSelectClient() throws Exception{
+        Scanner scanner = new Scanner(System.in);
         // 1. 获取通道
         SocketChannel socketChannel = SocketChannel.open();
         // 2. 绑定server端地址和端口号
@@ -102,19 +103,47 @@ public class TestSelector {
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
         // 4. buffer写入数据
         byte b = 1;
-        byteBuffer.put(b);
+
         //5. 设置为非阻塞模式
 
-        byteBuffer.flip();
-        // 6. 将缓存区数据写入到通道
-        socketChannel.write(byteBuffer);
-        // 7. 关闭通道
-        byteBuffer.clear();
+        while (scanner.hasNextLine()) {
+            String s = scanner.nextLine();
+            byteBuffer.put(s.getBytes());
+            byteBuffer.flip();
+            // 6. 将缓存区数据写入到通道
+            socketChannel.write(byteBuffer);
+            // 7. 关闭通道
+            byteBuffer.clear();
+        }
+
+
+
 //        socketChannel.close();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        Scanner scanner = new Scanner(System.in);
+        // 1. 获取通道
+        SocketChannel socketChannel = SocketChannel.open();
+        // 2. 绑定server端地址和端口号
+        socketChannel.connect(new InetSocketAddress("127.0.0.1", 9999));
+        socketChannel.configureBlocking(false);
+        // 3. 创建buffer
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        // 4. buffer写入数据
+        byte b = 1;
 
+        //5. 设置为非阻塞模式
+
+        while (scanner.hasNextLine()) {
+            String s = scanner.nextLine();
+            byteBuffer.put(s.getBytes());
+            byteBuffer.flip();
+            // 6. 将缓存区数据写入到通道
+            socketChannel.write(byteBuffer);
+            // 7. 关闭通道
+            byteBuffer.clear();
+        }
     }
 
 }
